@@ -1,11 +1,13 @@
-# Filament Spatie Translatable Plugin
+# Filament Lexi Translate Plugin
+
+Translate your Filament resources using [Lexi Translate](https://github.com/omaralalwi/lexi-translate) package.
 
 ## Installation
 
 Install the plugin with Composer:
 
 ```bash
-composer require filament/spatie-laravel-translatable-plugin:"^3.2" -W
+composer require composer require hydrat/filament-lexi-translatable
 ```
 
 ## Adding the plugin to a panel
@@ -13,29 +15,29 @@ composer require filament/spatie-laravel-translatable-plugin:"^3.2" -W
 To add a plugin to a panel, you must include it in the configuration file using the `plugin()` method:
 
 ```php
-use Filament\SpatieLaravelTranslatablePlugin;
+use Filament\LexiLaravelTranslatablePlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ...
-        ->plugin(SpatieLaravelTranslatablePlugin::make());
+        ->plugin(LexiLaravelTranslatablePlugin::make());
 }
 ```
 
 ## Setting the default translatable locales
 
-To set up the locales that can be used to translate content, you can pass an array of locales to the `defaultLocales()` plugin method:
+To set up the locales that can be used to translate content, you can use the [Lexi translate](https://github.com/omaralalwi/lexi-translate) configuration file, or you can pass an array of locales to the `defaultLocales()` plugin method:
 
 ```php
-use Filament\SpatieLaravelTranslatablePlugin;
+use Filament\LexiLaravelTranslatablePlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ...
         ->plugin(
-            SpatieLaravelTranslatablePlugin::make()
+            LexiLaravelTranslatablePlugin::make()
                 ->defaultLocales(['en', 'es']),
         );
 }
@@ -43,20 +45,20 @@ public function panel(Panel $panel): Panel
 
 ## Preparing your model class
 
-You need to make your model translatable. You can read how to do this in [Spatie's documentation](https://spatie.be/docs/laravel-translatable/installation-setup#content-making-a-model-translatable).
+You need to make your model translatable. You can read how to do this in [Lexi's documentation](https://github.com/omaralalwi/lexi-translate?tab=readme-ov-file#defining-lexitranslatable-models).
 
 ## Preparing your resource class
 
-You must apply the `Filament\Resources\Concerns\Translatable` trait to your resource class:
+You must apply the `Hydrat\FilamentLexiTranslate\Resources\Concerns\Translatable` trait to your resource class:
 
 ```php
-use Filament\Resources\Concerns\Translatable;
+use Hydrat\FilamentLexiTranslate\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 
 class BlogPostResource extends Resource
 {
     use Translatable;
-    
+
     // ...
 }
 ```
@@ -66,13 +68,13 @@ class BlogPostResource extends Resource
 After [preparing your resource class](#preparing-your-resource-class), you must make each of your resource's pages translatable too. You can find your resource's pages in the `Pages` directory of each resource folder. To prepare a page, you must apply the corresponding `Translatable` trait to it, and install a `LocaleSwitcher` header action:
 
 ```php
-use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Hydrat\FilamentLexiTranslate\Actions;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\ListRecords;
 
 class ListBlogPosts extends ListRecords
 {
     use ListRecords\Concerns\Translatable;
-    
+
     protected function getHeaderActions(): array
     {
         return [
@@ -80,19 +82,19 @@ class ListBlogPosts extends ListRecords
             // ...
         ];
     }
-    
+
     // ...
 }
 ```
 
 ```php
-use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
+use Hydrat\FilamentLexiTranslate\Actions;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\CreateRecord;
 
 class CreateBlogPost extends CreateRecord
 {
     use CreateRecord\Concerns\Translatable;
-    
+
     protected function getHeaderActions(): array
     {
         return [
@@ -100,19 +102,19 @@ class CreateBlogPost extends CreateRecord
             // ...
         ];
     }
-    
+
     // ...
 }
 ```
 
 ```php
-use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Hydrat\FilamentLexiTranslate\Actions;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\EditRecord;
 
 class EditBlogPost extends EditRecord
 {
     use EditRecord\Concerns\Translatable;
-    
+
     protected function getHeaderActions(): array
     {
         return [
@@ -120,7 +122,7 @@ class EditBlogPost extends EditRecord
             // ...
         ];
     }
-    
+
     // ...
 }
 ```
@@ -128,13 +130,13 @@ class EditBlogPost extends EditRecord
 And if you have a `ViewRecord` page for your resource:
 
 ```php
-use Filament\Actions;
-use Filament\Resources\Pages\ViewRecord;
+use Hydrat\FilamentLexiTranslate\Actions;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\ViewRecord;
 
 class ViewBlogPost extends ViewRecord
 {
     use ViewRecord\Concerns\Translatable;
-    
+
     protected function getHeaderActions(): array
     {
         return [
@@ -142,7 +144,7 @@ class ViewBlogPost extends ViewRecord
             // ...
         ];
     }
-    
+
     // ...
 }
 ```
@@ -150,13 +152,13 @@ class ViewBlogPost extends ViewRecord
 If you're using a simple resource, you can make the `ManageRecords` page translatable instead:
 
 ```php
-use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Hydrat\FilamentLexiTranslate\Actions;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\ManageRecords;
 
 class ManageBlogPosts extends ListRecords
 {
     use ManageRecords\Concerns\Translatable;
-    
+
     protected function getHeaderActions(): array
     {
         return [
@@ -164,7 +166,7 @@ class ManageBlogPosts extends ListRecords
             // ...
         ];
     }
-    
+
     // ...
 }
 ```
@@ -174,15 +176,15 @@ class ManageBlogPosts extends ListRecords
 By default, the translatable locales can be [set globally for all resources in the plugin configuration](#setting-the-default-translatable-locales). Alternatively, you can customize the translatable locales for a particular resource by overriding the `getTranslatableLocales()` method in your resource class:
 
 ```php
-use Filament\Resources\Concerns\Translatable;
+use Hydrat\FilamentLexiTranslate\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 
 class BlogPostResource extends Resource
 {
     use Translatable;
-    
+
     // ...
-    
+
     public static function getTranslatableLocales(): array
     {
         return ['en', 'fr'];
@@ -192,16 +194,16 @@ class BlogPostResource extends Resource
 
 ## Translating relation managers
 
-First, you must apply the `Filament\Resources\RelationManagers\Concerns\Translatable` trait to the relation manager class:
+First, you must apply the `Hydrat\FilamentLexiTranslate\Resources\RelationManagers\Concerns\Translatable` trait to the relation manager class:
 
 ```php
-use Filament\Resources\RelationManagers\Concerns\Translatable;
+use Hydrat\FilamentLexiTranslate\Resources\RelationManagers\Concerns\Translatable;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class BlogPostsRelationManager extends RelationManager
 {
     use Translatable;
-    
+
     // ...
 }
 ```
@@ -237,10 +239,10 @@ use Livewire\Attributes\Reactive;
 class BlogPostsRelationManager extends RelationManager
 {
     use Translatable;
-    
+
     #[Reactive]
     public ?string $activeLocale = null;
-    
+
     // ...
 }
 ```
@@ -258,9 +260,9 @@ use Filament\Resources\RelationManagers\RelationManager;
 class BlogPostsRelationManager extends RelationManager
 {
     use Translatable;
-    
+
     // ...
-    
+
     public function getTranslatableLocales(): array
     {
         return ['en', 'fr'];
@@ -273,5 +275,5 @@ class BlogPostsRelationManager extends RelationManager
 If you wish to translate the package, you may publish the language files using:
 
 ```bash
-php artisan vendor:publish --tag=filament-spatie-laravel-translatable-plugin-translations
+php artisan vendor:publish --tag=filament-lexi-laravel-translatable-plugin-translations
 ```
