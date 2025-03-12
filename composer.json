@@ -1,5 +1,5 @@
 {
-    "name": "hydrat/lexi-laravel-translatable-plugin",
+    "name": "hydrat/lexi-laravel-translatable",
     "description": "Filament support for `omaralalwi/lexi-translate`.",
     "license": "MIT",
     "homepage": "https://github.com/Hydrat-Agency/Filament-Lexi-translatable",
