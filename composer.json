@@ -1,0 +1,33 @@
+{
+    "name": "hydrat/lexi-laravel-translatable-plugin",
+    "description": "Filament support for `omaralalwi/lexi-translate`.",
+    "license": "MIT",
+    "homepage": "https://github.com/Hydrat-Agency/Filament-Lexi-translatable",
+    "support": {
+        "issues": "https://github.com/Hydrat-Agency/Filament-Lexi-translatable/issues",
+        "source": "https://github.com/Hydrat-Agency/Filament-Lexi-translatable"
+    },
+    "require": {
+        "php": "^8.1",
+        "filament/support": "^3.2",
+        "illuminate/support": "^10.45|^11.0|^12.0",
+        "omaralalwi/lexi-translate": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Filament\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Filament\\LexiLaravelTranslatablePluginServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
