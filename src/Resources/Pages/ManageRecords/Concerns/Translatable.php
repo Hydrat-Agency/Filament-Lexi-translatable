@@ -1,8 +1,8 @@
 <?php
 
-namespace Filament\Resources\Pages\ManageRecords\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Pages\ManageRecords\Concerns;
 
-use Filament\Resources\Pages\ListRecords\Concerns\Translatable as ListRecordsTranslatable;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\ListRecords\Concerns\Translatable as ListRecordsTranslatable;
 
 trait Translatable
 {

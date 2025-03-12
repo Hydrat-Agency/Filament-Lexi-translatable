@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Hydrat\\FilamentLexiTranslate\\LexiLaravelTranslatablePluginServiceProvider"
+                "Hydrat\\FilamentLexiTranslate\\LexiTranslatablePluginServiceProvider"
             ]
         }
     },

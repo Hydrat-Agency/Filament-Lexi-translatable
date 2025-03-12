@@ -1,9 +1,9 @@
 <?php
 
-namespace Filament\Resources\Pages\CreateRecord\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Pages\CreateRecord\Concerns;
 
 use Filament\Facades\Filament;
-use Filament\Resources\Concerns\HasActiveLocaleSwitcher;
+use Hydrat\FilamentLexiTranslate\Resources\Concerns\HasActiveLocaleSwitcher;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;

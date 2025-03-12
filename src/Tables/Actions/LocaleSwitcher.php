@@ -1,8 +1,9 @@
 <?php
 
-namespace Filament\Tables\Actions;
+namespace Hydrat\FilamentLexiTranslate\Tables\Actions;
 
-use Filament\Actions\Concerns\HasTranslatableLocaleOptions;
+use Hydrat\FilamentLexiTranslate\Actions\Concerns\HasTranslatableLocaleOptions;
+use Filament\Tables\Actions\SelectAction;
 
 class LocaleSwitcher extends SelectAction
 {

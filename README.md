@@ -1,6 +1,7 @@
 # Filament Lexi Translate Plugin
 
 Translate your Filament resources using [Lexi Translate](https://github.com/omaralalwi/lexi-translate) package.
+Adaptation of the [Filament Spatie Translatable](https://filamentphp.com/plugins/filament-spatie-translatable) plugin.
 
 ## Installation
 
@@ -15,13 +16,13 @@ composer require composer require hydrat/filament-lexi-translatable
 To add a plugin to a panel, you must include it in the configuration file using the `plugin()` method:
 
 ```php
-use Filament\LexiLaravelTranslatablePlugin;
+use Hydrat\FilamentLexiTranslate\LexiTranslatablePlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ...
-        ->plugin(LexiLaravelTranslatablePlugin::make());
+        ->plugin(LexiTranslatablePlugin::make());
 }
 ```
 
@@ -30,14 +31,14 @@ public function panel(Panel $panel): Panel
 To set up the locales that can be used to translate content, you can use the [Lexi translate](https://github.com/omaralalwi/lexi-translate) configuration file, or you can pass an array of locales to the `defaultLocales()` plugin method:
 
 ```php
-use Filament\LexiLaravelTranslatablePlugin;
+use Hydrat\FilamentLexiTranslate\LexiTranslatablePlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ...
         ->plugin(
-            LexiLaravelTranslatablePlugin::make()
+            LexiTranslatablePlugin::make()
                 ->defaultLocales(['en', 'es']),
         );
 }
@@ -275,5 +276,5 @@ class BlogPostsRelationManager extends RelationManager
 If you wish to translate the package, you may publish the language files using:
 
 ```bash
-php artisan vendor:publish --tag=filament-lexi-laravel-translatable-plugin-translations
+php artisan vendor:publish --tag=filament-lexi-translatable-plugin-translations
 ```

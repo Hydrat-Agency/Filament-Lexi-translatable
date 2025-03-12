@@ -1,8 +1,8 @@
 <?php
 
-namespace Filament\Resources\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Concerns;
 
-use Hydrat\FilamentLexiTranslate\LexiLaravelTranslatableContentDriver;
+use Hydrat\FilamentLexiTranslate\LexiTranslatableContentDriver;
 use Filament\Support\Contracts\TranslatableContentDriver;
 
 trait HasActiveLocaleSwitcher
@@ -28,6 +28,6 @@ trait HasActiveLocaleSwitcher
      */
     public function getFilamentTranslatableContentDriver(): ?string
     {
-        return LexiLaravelTranslatableContentDriver::class;
+        return LexiTranslatableContentDriver::class;
     }
 }

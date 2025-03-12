@@ -1,10 +1,12 @@
 <?php
 
-namespace Filament\Pages\Actions;
+namespace Hydrat\FilamentLexiTranslate\Pages\Actions;
 
-use Filament\Actions\LocaleSwitcher as BaseLocaleSwitcher;
+use Hydrat\FilamentLexiTranslate\Actions\LocaleSwitcher as BaseLocaleSwitcher;
 
 /**
  * @deprecated Use `\Filament\Actions\LocaleSwitcher` instead.
  */
-class LocaleSwitcher extends BaseLocaleSwitcher {}
+class LocaleSwitcher extends BaseLocaleSwitcher
+{
+}

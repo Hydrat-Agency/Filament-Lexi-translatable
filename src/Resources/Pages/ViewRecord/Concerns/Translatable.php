@@ -1,10 +1,10 @@
 <?php
 
-namespace Filament\Resources\Pages\ViewRecord\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Pages\ViewRecord\Concerns;
 
-use Filament\Resources\Concerns\HasActiveLocaleSwitcher;
-use Filament\Resources\Pages\Concerns\HasTranslatableFormWithExistingRecordData;
-use Filament\Resources\Pages\Concerns\HasTranslatableRecord;
+use Hydrat\FilamentLexiTranslate\Resources\Concerns\HasActiveLocaleSwitcher;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\Concerns\HasTranslatableFormWithExistingRecordData;
+use Hydrat\FilamentLexiTranslate\Resources\Pages\Concerns\HasTranslatableRecord;
 use Illuminate\Support\Arr;
 
 trait Translatable

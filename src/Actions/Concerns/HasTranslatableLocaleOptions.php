@@ -1,8 +1,8 @@
 <?php
 
-namespace Filament\Actions\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Actions\Concerns;
 
-use Filament\SpatieLaravelTranslatablePlugin;
+use Hydrat\FilamentLexiTranslate\LexiTranslatablePlugin;
 
 trait HasTranslatableLocaleOptions
 {
@@ -17,7 +17,7 @@ trait HasTranslatableLocaleOptions
 
             $locales = [];
 
-            /** @var LexiLaravelTranslatablePlugin $plugin */
+            /** @var LexiTranslatablePlugin $plugin */
             $plugin = filament('lexi-laravel-translatable');
 
             foreach ($livewire->getTranslatableLocales() as $locale) {

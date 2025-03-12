@@ -1,6 +1,8 @@
 <?php
 
-namespace Filament\Actions;
+namespace Hydrat\FilamentLexiTranslate\Actions;
+
+use Filament\Actions\SelectAction;
 
 class LocaleSwitcher extends SelectAction
 {
@@ -15,7 +17,7 @@ class LocaleSwitcher extends SelectAction
     {
         parent::setUp();
 
-        $this->label(__('filament-lexi-laravel-translatable-plugin::actions.active_locale.label'));
+        $this->label(__('filament-lexi-translatable-plugin::actions.active_locale.label'));
 
         $this->setTranslatableLocaleOptions();
     }

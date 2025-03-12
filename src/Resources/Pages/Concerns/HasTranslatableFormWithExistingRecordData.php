@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\Resources\Pages\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Pages\Concerns;
 
 use Livewire\Attributes\Locked;
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 
 use function Filament\Support\generate_search_column_expression;
 
-class LexiLaravelTranslatableContentDriver implements TranslatableContentDriver
+class LexiTranslatableContentDriver implements TranslatableContentDriver
 {
     public function __construct(protected string $activeLocale)
     {

@@ -5,7 +5,7 @@ namespace Hydrat\FilamentLexiTranslate;
 use Closure;
 use Filament\Contracts\Plugin;
 
-class LexiLaravelTranslatablePlugin implements Plugin
+class LexiTranslatablePlugin implements Plugin
 {
     /**
      * @var array<string>

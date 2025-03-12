@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\Resources\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Concerns;
 
 use Exception;
 use Omaralalwi\LexiTranslate\Traits\LexiTranslatable;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Filament\Resources\Pages\ListRecords\Concerns;
+namespace Hydrat\FilamentLexiTranslate\Resources\Pages\ListRecords\Concerns;
 
-use Filament\Resources\Concerns\HasActiveLocaleSwitcher;
+use Hydrat\FilamentLexiTranslate\Resources\Concerns\HasActiveLocaleSwitcher;
 
 trait Translatable
 {
