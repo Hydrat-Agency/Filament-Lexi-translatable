@@ -15,13 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Filament\\": "src"
+            "Hydrat\\FilamentLexiTranslate\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Filament\\LexiLaravelTranslatablePluginServiceProvider"
+                "Hydrat\\FilamentLexiTranslate\\LexiLaravelTranslatablePluginServiceProvider"
             ]
         }
     },
