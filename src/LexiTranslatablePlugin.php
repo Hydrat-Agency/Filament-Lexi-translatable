@@ -3,6 +3,7 @@
 namespace Hydrat\FilamentLexiTranslate;
 
 use Closure;
+use Filament\Panel;
 use Filament\Contracts\Plugin;
 
 class LexiTranslatablePlugin implements Plugin
@@ -45,7 +46,7 @@ class LexiTranslatablePlugin implements Plugin
     {
         return filled($this->defaultLocales)
             ? $this->defaultLocales
-            : config('lexi-translate.supported_locales', []);
+            : lexi_locales();
     }
 
     /**

@@ -20,7 +20,8 @@ trait HasTranslatableFormWithExistingRecordData
             $translatedData = [];
 
             foreach ($translatableAttributes as $attribute) {
-                $translatedData[$attribute] = $record->getTranslation($attribute, $locale, useFallbackLocale: false);
+                // $translatedData[$attribute] = $record->getTranslation($attribute, $locale, useFallbackLocale: false);
+                $translatedData[$attribute] = $record->transAttr($attribute, $locale);
             }
 
             if ($locale !== $this->activeLocale) {
@@ -38,7 +39,9 @@ trait HasTranslatableFormWithExistingRecordData
     {
         $resource = static::getResource();
 
-        $availableLocales = array_keys($this->getRecord()->getTranslations($resource::getTranslatableAttributes()[0]));
+        // $availableLocales = array_keys($this->getRecord()->getTranslations($resource::getTranslatableAttributes()[0]));
+        $availableLocales = $this->getRecord()->translations()->pluck('locale')->unique()->toArray();
+
         $defaultLocale = $resource::getDefaultTranslatableLocale();
 
         if (in_array($defaultLocale, $availableLocales)) {
