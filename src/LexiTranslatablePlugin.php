@@ -5,6 +5,7 @@ namespace Hydrat\FilamentLexiTranslate;
 use Closure;
 use Filament\Panel;
 use Filament\Contracts\Plugin;
+use Illuminate\Support\Facades\Config;
 
 class LexiTranslatablePlugin implements Plugin
 {
@@ -56,6 +57,8 @@ class LexiTranslatablePlugin implements Plugin
     {
         $this->defaultLocales = $defaultLocales;
 
+        Config::set('lexi-translate.supported_locales', $defaultLocales);
+
         return $this;
     }
 
@@ -76,6 +79,6 @@ class LexiTranslatablePlugin implements Plugin
             $label = $callback($locale, $displayLocale);
         }
 
-        return $label ?? (locale_get_display_name($locale, $displayLocale) ?: null);
+        return ucfirst($label ?? (locale_get_display_name($locale, $displayLocale) ?: null));
     }
 }

@@ -33,11 +33,22 @@ trait Translatable
         $record = app(static::getModel());
 
         $translatableAttributes = static::getResource()::getTranslatableAttributes();
+        $defaultLocale = static::getResource()::getDefaultTranslatableLocale();
 
-        $record->fill(Arr::except($data, $translatableAttributes));
+        if (blank($this->activeLocale)) {
+            $this->activeLocale = $defaultLocale;
+        }
+
+        if ($this->activeLocale === $defaultLocale) {
+            $record->fill($data);
+        } else {
+            $record->fill(Arr::except($data, $translatableAttributes));
+        }
 
         foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
-            $record->setTranslation($key, $this->activeLocale, $value);
+            if (filled($value)) {
+                $record->setTranslation($key, $this->activeLocale, $value);
+            }
         }
 
         $originalData = $this->data;

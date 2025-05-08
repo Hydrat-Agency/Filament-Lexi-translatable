@@ -25,49 +25,60 @@ trait Translatable
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $translatableAttributes = static::getResource()::getTranslatableAttributes();
+        $defaultLocale = static::getResource()::getDefaultTranslatableLocale();
 
-        $record->fill(Arr::except($data, $translatableAttributes));
+        if (blank($this->activeLocale)) {
+            $this->activeLocale = $defaultLocale;
+        }
+
+        if ($this->activeLocale === $defaultLocale) {
+            $record->fill($data);
+        } else {
+            $record->fill(Arr::except($data, $translatableAttributes));
+        }
 
         foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
-            $record->setTranslation($key, $this->activeLocale, $value);
-        }
-
-        $originalData = $this->data;
-
-        $existingLocales = null;
-
-        foreach ($this->otherLocaleData as $locale => $localeData) {
-            $existingLocales ??= collect($translatableAttributes)
-                ->map(fn (string $attribute): array => array_keys($record->getTranslations($attribute)))
-                ->flatten()
-                ->unique()
-                ->all();
-
-            $this->data = [
-                ...$this->data,
-                ...$localeData,
-            ];
-
-            try {
-                $this->form->validate();
-            } catch (ValidationException $exception) {
-                if (! array_key_exists($locale, $existingLocales)) {
-                    continue;
-                }
-
-                $this->setActiveLocale($locale);
-
-                throw $exception;
-            }
-
-            $localeData = $this->mutateFormDataBeforeSave($localeData);
-
-            foreach (Arr::only($localeData, $translatableAttributes) as $key => $value) {
-                $record->setTranslation($key, $locale, $value);
+            if (filled($value)) {
+                $record->setTranslation($key, $this->activeLocale, $value);
             }
         }
 
-        $this->data = $originalData;
+        // $originalData = $this->data;
+
+        // $existingLocales = null;
+
+        // foreach ($this->otherLocaleData as $locale => $localeData) {
+        //     $existingLocales ??= collect($translatableAttributes)
+        //         ->map(fn (string $attribute): array => array_keys($record->getTranslations($attribute)))
+        //         ->flatten()
+        //         ->unique()
+        //         ->all();
+
+        //     $this->data = [
+        //         ...$this->data,
+        //         ...$localeData,
+        //     ];
+
+        //     try {
+        //         $this->form->validate();
+        //     } catch (ValidationException $exception) {
+        //         if (! array_key_exists($locale, $existingLocales)) {
+        //             continue;
+        //         }
+
+        //         $this->setActiveLocale($locale);
+
+        //         throw $exception;
+        //     }
+
+        //     $localeData = $this->mutateFormDataBeforeSave($localeData);
+
+        //     foreach (Arr::only($localeData, $translatableAttributes) as $key => $value) {
+        //         $record->setTranslation($key, $locale, $value);
+        //     }
+        // }
+
+        // $this->data = $originalData;
 
         $record->save();
 

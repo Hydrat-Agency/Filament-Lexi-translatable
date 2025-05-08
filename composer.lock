@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62ed238912a2f7fb5fc4fb00a81b3221",
+    "content-hash": "bf71fd467b89c06565ff2aca2c7599ce",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -2908,17 +2908,11 @@
         },
         {
             "name": "omaralalwi/lexi-translate",
-            "version": "1.0.9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/omaralalwi/lexi-translate.git",
-                "reference": "6bfa9576103365f8f3d2b4182f47d0a2660ef813"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/omaralalwi/lexi-translate/zipball/6bfa9576103365f8f3d2b4182f47d0a2660ef813",
-                "reference": "6bfa9576103365f8f3d2b4182f47d0a2660ef813",
-                "shasum": ""
+                "url": "https://github.com/tgeorgel/lexi-translate.git",
+                "reference": "6d6dd0d9e904d476bae4bd20c60f530eee8e6b4b"
             },
             "require": {
                 "illuminate/cache": "^9.0|^10.0|^11.0|^12.0",
@@ -2930,26 +2924,39 @@
                 "orchestra/testbench": "^6.0|^7.0|^8.0",
                 "phpunit/phpunit": "^9.0|^10.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "LexiTranslate": "Omaralalwi\\LexiTranslate\\LexiTranslateFacade"
-                    },
                     "providers": [
                         "Omaralalwi\\LexiTranslate\\LexiTranslateServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "LexiTranslate": "Omaralalwi\\LexiTranslate\\LexiTranslateFacade"
+                    }
                 }
             },
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
                     "Omaralalwi\\LexiTranslate\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Omaralalwi\\LexiTranslate\\Tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-html coverage"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2995,11 +3002,7 @@
                 "translation-management",
                 "translations"
             ],
-            "support": {
-                "issues": "https://github.com/omaralalwi/lexi-translate/issues",
-                "source": "https://github.com/omaralalwi/lexi-translate/tree/v1.0.9"
-            },
-            "time": "2025-03-21T22:46:47+00:00"
+            "time": "2025-05-08T16:10:27+00:00"
         },
         {
             "name": "psr/cache",
@@ -5780,7 +5783,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "omaralalwi/lexi-translate": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

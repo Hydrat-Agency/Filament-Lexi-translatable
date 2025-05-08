@@ -44,7 +44,7 @@ trait HasTranslatableFormWithExistingRecordData
 
         $defaultLocale = $resource::getDefaultTranslatableLocale();
 
-        if (in_array($defaultLocale, $availableLocales)) {
+        if (blank($availableLocales) ||in_array($defaultLocale, $availableLocales)) {
             return $defaultLocale;
         }
 
