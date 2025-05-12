@@ -9,6 +9,16 @@ trait HasActiveLocaleSwitcher
 {
     public ?string $activeLocale = null;
 
+    public function updatedActiveLocale($value, $key): void
+    {
+        session()->put('filament_active_locale', $value);
+    }
+
+    public function lastSelectedActiveLocale(): ?string
+    {
+        return session()->get('filament_active_locale');
+    }
+
     public function getActiveFormsLocale(): ?string
     {
         if (! in_array($this->activeLocale, $this->getTranslatableLocales())) {

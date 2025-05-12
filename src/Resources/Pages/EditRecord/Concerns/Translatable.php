@@ -43,42 +43,43 @@ trait Translatable
             }
         }
 
-        // $originalData = $this->data;
+        $originalData = $this->data;
 
-        // $existingLocales = null;
+        $existingLocales = null;
 
-        // foreach ($this->otherLocaleData as $locale => $localeData) {
-        //     $existingLocales ??= collect($translatableAttributes)
-        //         ->map(fn (string $attribute): array => array_keys($record->getTranslations($attribute)))
-        //         ->flatten()
-        //         ->unique()
-        //         ->all();
+        foreach ($this->otherLocaleData as $locale => $localeData) {
+            $existingLocales ??= $record->translations()
+                ->pluck('locale')
+                ->unique()
+                ->all();
 
-        //     $this->data = [
-        //         ...$this->data,
-        //         ...$localeData,
-        //     ];
+            $this->data = [
+                ...$this->data,
+                ...$localeData,
+            ];
 
-        //     try {
-        //         $this->form->validate();
-        //     } catch (ValidationException $exception) {
-        //         if (! array_key_exists($locale, $existingLocales)) {
-        //             continue;
-        //         }
+            try {
+                $this->form->validate();
+            } catch (ValidationException $exception) {
+                if (! array_key_exists($locale, $existingLocales)) {
+                    continue;
+                }
 
-        //         $this->setActiveLocale($locale);
+                $this->setActiveLocale($locale);
 
-        //         throw $exception;
-        //     }
+                throw $exception;
+            }
 
-        //     $localeData = $this->mutateFormDataBeforeSave($localeData);
+            $localeData = $this->mutateFormDataBeforeSave($localeData);
 
-        //     foreach (Arr::only($localeData, $translatableAttributes) as $key => $value) {
-        //         $record->setTranslation($key, $locale, $value);
-        //     }
-        // }
+            foreach (Arr::only($localeData, $translatableAttributes) as $key => $value) {
+                if (filled($value)) {
+                    $record->setTranslation($key, $locale, $value);
+                }
+            }
+        }
 
-        // $this->data = $originalData;
+        $this->data = $originalData;
 
         $record->save();
 
@@ -90,8 +91,10 @@ trait Translatable
         $this->oldActiveLocale = $this->activeLocale;
     }
 
-    public function updatedActiveLocale(): void
+    public function updatedActiveLocale(string $newActiveLocale): void
     {
+        session()->put('filament_active_locale', $newActiveLocale);
+
         if (blank($this->oldActiveLocale)) {
             return;
         }
@@ -114,6 +117,6 @@ trait Translatable
     {
         $this->updatingActiveLocale();
         $this->activeLocale = $locale;
-        $this->updatedActiveLocale();
+        $this->updatedActiveLocale($locale);
     }
 }

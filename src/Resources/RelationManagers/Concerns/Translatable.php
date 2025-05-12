@@ -35,6 +35,6 @@ trait Translatable
 
     protected function setActiveLocale(): void
     {
-        $this->activeLocale = $this->getDefaultTranslatableLocale();
+        $this->activeLocale = $this->lastSelectedActiveLocale() ?? $this->getDefaultTranslatableLocale();
     }
 }

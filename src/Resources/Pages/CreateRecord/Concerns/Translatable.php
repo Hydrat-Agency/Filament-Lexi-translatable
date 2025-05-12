@@ -68,7 +68,9 @@ trait Translatable
             $localeData = $this->mutateFormDataBeforeCreate($localeData);
 
             foreach (Arr::only($localeData, $translatableAttributes) as $key => $value) {
-                $record->setTranslation($key, $locale, $value);
+                if (filled($value)) {
+                    $record->setTranslation($key, $locale, $value);
+                }
             }
         }
 
@@ -93,6 +95,8 @@ trait Translatable
 
     public function updatedActiveLocale(string $newActiveLocale): void
     {
+        session()->put('filament_active_locale', $newActiveLocale);
+
         if (blank($this->oldActiveLocale)) {
             return;
         }

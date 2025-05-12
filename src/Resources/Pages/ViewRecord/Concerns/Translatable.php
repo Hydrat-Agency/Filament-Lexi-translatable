@@ -22,6 +22,8 @@ trait Translatable
 
     public function updatedActiveLocale(string $newActiveLocale): void
     {
+        session()->put('filament_active_locale', $newActiveLocale);
+
         if (blank($this->oldActiveLocale)) {
             return;
         }
