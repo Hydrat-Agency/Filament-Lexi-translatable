@@ -34,18 +34,20 @@ class LexiTranslatableContentDriver implements TranslatableContentDriver
     {
         $record = new $model;
 
-        if (method_exists($record, 'setLocale')) {
-            $record->setLocale($this->activeLocale);
-        }
-
-        $translatableAttributes = method_exists($record, 'getTranslatableAttributes') ?
-            $record->getTranslatableAttributes() :
+        $defaultLocale = Arr::first(lexi_locales());
+        $translatableAttributes = method_exists($record, 'getTranslatableFields') ?
+            $record->getTranslatableFields() :
             [];
 
-        $record->fill(Arr::except($data, $translatableAttributes));
+        if (blank($this->activeLocale)) {
+            $this->activeLocale = $defaultLocale;
+        }
 
-        if (method_exists($record, 'setTranslation')) {
-            foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
+        $record->fill($data);
+        $record->save(); // Save the record to get an ID
+
+        foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
+            if (filled($value)) {
                 $record->setTranslation($key, $this->activeLocale, $value);
             }
         }
@@ -55,11 +57,7 @@ class LexiTranslatableContentDriver implements TranslatableContentDriver
 
     public function setRecordLocale(Model $record): Model
     {
-        if (! method_exists($record, 'setLocale')) {
-            return $record;
-        }
-
-        return $record->setLocale($this->activeLocale);
+        return $record;
     }
 
     /**
@@ -67,18 +65,23 @@ class LexiTranslatableContentDriver implements TranslatableContentDriver
      */
     public function updateRecord(Model $record, array $data): Model
     {
-        if (method_exists($record, 'setLocale')) {
-            $record->setLocale($this->activeLocale);
-        }
-
-        $translatableAttributes = method_exists($record, 'getTranslatableAttributes') ?
-            $record->getTranslatableAttributes() :
+        $defaultLocale = Arr::first(lexi_locales());
+        $translatableAttributes = method_exists($record, 'getTranslatableFields') ?
+            $record->getTranslatableFields() :
             [];
 
-        $record->fill(Arr::except($data, $translatableAttributes));
+        if (blank($this->activeLocale)) {
+            $this->activeLocale = $defaultLocale;
+        }
 
-        if (method_exists($record, 'setTranslation')) {
-            foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
+        if ($this->activeLocale === $defaultLocale) {
+            $record->fill($data);
+        } else {
+            $record->fill(Arr::except($data, $translatableAttributes));
+        }
+
+        foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
+            if (filled($value)) {
                 $record->setTranslation($key, $this->activeLocale, $value);
             }
         }
@@ -95,16 +98,12 @@ class LexiTranslatableContentDriver implements TranslatableContentDriver
     {
         $attributes = $record->attributesToArray();
 
-        if (! method_exists($record, 'getTranslatableAttributes')) {
+        if (! method_exists($record, 'getTranslatableFields')) {
             return $attributes;
         }
 
-        if (! method_exists($record, 'getTranslation')) {
-            return $attributes;
-        }
-
-        foreach ($record->getTranslatableAttributes() as $attribute) {
-            $attributes[$attribute] = $record->getTranslation($attribute, $this->activeLocale, useFallbackLocale: false);
+        foreach ($record->getTranslatableFields() as $attribute) {
+            $attributes[$attribute] = $record->translate($attribute, $this->activeLocale, useFallbackLocale: false);
         }
 
         return $attributes;
@@ -112,18 +111,13 @@ class LexiTranslatableContentDriver implements TranslatableContentDriver
 
     public function applySearchConstraintToQuery(Builder $query, string $column, string $search, string $whereClause, ?bool $isCaseInsensitivityForced = null): Builder
     {
-        /** @var Connection $databaseConnection */
-        $databaseConnection = $query->getConnection();
+        $whereClause = $whereClause === 'where' ? 'whereHas' : 'orWhereHas';
+        $locale = $this->activeLocale;
 
-        $column = match ($databaseConnection->getDriverName()) {
-            'pgsql' => "{$column}->>'{$this->activeLocale}'",
-            default => "json_extract({$column}, \"$.{$this->activeLocale}\")",
-        };
-
-        return $query->{$whereClause}(
-            generate_search_column_expression($column, $isCaseInsensitivityForced, $databaseConnection),
-            'like',
-            (string) str($search)->wrap('%'),
-        );
+        return $query->{$whereClause}('translations', function ($q) use ($column, $search, $locale) {
+            $q->where('column', $column)
+                ->where('locale', $locale)
+                ->where('text', 'like', '%'.$search.'%');
+        });
     }
 }
