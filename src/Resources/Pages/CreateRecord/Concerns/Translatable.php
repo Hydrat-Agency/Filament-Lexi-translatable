@@ -113,6 +113,10 @@ trait Translatable
 
         $translatableAttributes = static::getResource()::getTranslatableAttributes();
 
+        if (method_exists($this, 'preserveLocaleDataKeys')) {
+            $translatableAttributes = $this->preserveLocaleDataKeys($translatableAttributes);
+        }
+
         $this->otherLocaleData[$this->oldActiveLocale] = Arr::only($this->data, $translatableAttributes);
 
         $this->data = [
