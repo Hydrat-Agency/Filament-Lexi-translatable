@@ -44,7 +44,7 @@ trait Translatable
         }
 
         if (method_exists($this, 'handleRecordLocaleUpdate')) {
-            $this->handleRecordLocaleUpdate($record, $data, $this->activeLocale);
+            $this->handleRecordLocaleUpdate($record, $data, $this->activeLocale, $this->activeLocale === $defaultLocale);
         }
 
         $originalData = $this->data;
@@ -83,7 +83,7 @@ trait Translatable
             }
 
             if (method_exists($this, 'handleRecordLocaleUpdate')) {
-                $this->handleRecordLocaleUpdate($record, $localeData, $locale);
+                $this->handleRecordLocaleUpdate($record, $localeData, $locale, $locale === $defaultLocale);
             }
         }
 
