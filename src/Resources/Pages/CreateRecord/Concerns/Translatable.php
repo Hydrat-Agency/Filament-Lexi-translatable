@@ -45,6 +45,8 @@ trait Translatable
             $record->fill(Arr::except($data, $translatableAttributes));
         }
 
+        $record->save();
+
         foreach (Arr::only($data, $translatableAttributes) as $key => $value) {
             if (filled($value)) {
                 $record->setTranslation($key, $this->activeLocale, $value);
