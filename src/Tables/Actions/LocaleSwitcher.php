@@ -3,7 +3,7 @@
 namespace Hydrat\FilamentLexiTranslate\Tables\Actions;
 
 use Hydrat\FilamentLexiTranslate\Actions\Concerns\HasTranslatableLocaleOptions;
-use Filament\Tables\Actions\SelectAction;
+use Filament\Actions\SelectAction;
 
 class LocaleSwitcher extends SelectAction
 {
